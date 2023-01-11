@@ -143,7 +143,7 @@ all_chain_list = {}
 
 PAGE_SIZE = 5
 
-with open('search_dropdown_dict.txt', 'rb') as handle:
+with open('./Dendrite/search_dropdown_dict.txt', 'rb') as handle:
     search_dropdown_dict = pickle.loads(handle.read())
 
 search_dropdown_datalist_list = []
