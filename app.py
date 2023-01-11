@@ -666,5 +666,5 @@ app.layout = html.Div([sidebar, maindiv])
     
 # app.run_server(debug=False,mode="external",host='localhost', port=8805)
 if __name__ == '__main__':
-    app.run_server(debug=False)
+    app.run_server(debug=False,mode="external",host='localhost', port=8850)
 
