@@ -132,7 +132,7 @@ class Encryptor():
         decrypted['ap_case_safe']['sub_int']=decrypted['ap_case_safe']['sub_int'].map(lambda x: datetime.datetime(2003, 6, 9)+datetime.timedelta(days=int(x)) if ~np.isnan(x) else np.nan)
         return decrypted
 
-parent_directory="../data"    
+parent_directory="./data"    
 encryptor=Encryptor()
 loaded_key=encryptor.key_load(os.path.join(parent_directory,'path_db_v2.key'))
 path_db=encryptor.load_decrypt(loaded_key, os.path.join(parent_directory,'text_db_encrypted_v2.pkl'))
