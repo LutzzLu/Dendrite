@@ -1,5 +1,7 @@
 import dash
 # import dash_auth
+import dash_auth
+from users import USERNAME_PASSWORD_PAIRS
 import dash_core_components as dcc
 import dash_html_components as html
 import plotly
@@ -12,23 +14,23 @@ from dash import dcc
 from dash import html
 from jupyter_dash import JupyterDash
 from dash import Dash
-from sklearn.manifold import TSNE
+# from sklearn.manifold import TSNE
 import pandas as pd  
-from sklearn.model_selection import train_test_split
+# from sklearn.model_selection import train_test_split
 # import numpy as np
-from sklearn.pipeline import make_pipeline
-from sklearn.preprocessing import StandardScaler
-from sklearn.svm import SVC
-from sklearn.metrics import confusion_matrix
-from sklearn.metrics import classification_report
+# from sklearn.pipeline import make_pipeline
+# from sklearn.preprocessing import StandardScaler
+# from sklearn.svm import SVC
+# from sklearn.metrics import confusion_matrix
+# from sklearn.metrics import classification_report
 import joblib
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.datasets import make_classification
-from sklearn.naive_bayes import GaussianNB
-from sklearn.metrics import roc_curve, auc
-from sklearn.metrics import roc_auc_score
+# from sklearn.ensemble import RandomForestClassifier
+# from sklearn.datasets import make_classification
+# from sklearn.naive_bayes import GaussianNB
+# from sklearn.metrics import roc_curve, auc
+# from sklearn.metrics import roc_auc_score
 from dash.dependencies import Input, Output, State
-from sklearn.metrics import multilabel_confusion_matrix
+# from sklearn.metrics import multilabel_confusion_matrix
 import base64, io, os
 from dash import  dash_table
 from flask import Flask, Response
@@ -48,9 +50,9 @@ import dash_html_components as html
 import dash_core_components as dcc
 import json
 
-from copy import copy
+# from copy import copy
 
-import ast
+# import ast
 
 from functools import reduce
 
@@ -69,14 +71,14 @@ from dash import Input, Output, State, html
 
 from tqdm.notebook import trange, tqdm
 import pickle
-import torch
+# import torch
 import numpy as np
 import pandas as pd
-import datasets
-from datasets import Dataset
-from datasets import load_metric
-from datasets import load_dataset
-from sklearn.model_selection import train_test_split
+# import datasets
+# from datasets import Dataset
+# from datasets import load_metric
+# from datasets import load_dataset
+# from sklearn.model_selection import train_test_split
 
 from cryptography.fernet import Fernet
 import json
@@ -204,6 +206,10 @@ markdown_text_1 = '''
 filter_index_number = 1
 
 app = JupyterDash(__name__, external_stylesheets=[dbc.themes.SPACELAB])
+auth = dash_auth.BasicAuth(
+    app,
+    USERNAME_PASSWORD_PAIRS
+)
 
 SIDEBAR_STYLE = {
     "position": "fixed",
