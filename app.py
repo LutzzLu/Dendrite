@@ -1,86 +1,29 @@
 import dash
-# import dash_auth
 import dash_auth
 from users import USERNAME_PASSWORD_PAIRS
-# import dash_core_components as dcc
 from dash import dcc
-# from dash.dcc import Markdown as dcc_markdown
-# from dash.dcc import Input as dcc_input
-# import dash_html_components as html
-import dash as html
+from dash import html
 import plotly
-
 import dash_bootstrap_components as dbc
 import dash_daq as dq
-# import dash_core_components as dcc
-# from dash import dcc
-# # import dash_html_components as html
-# from dash import html
 from jupyter_dash import JupyterDash
 from dash import Dash
-# from sklearn.manifold import TSNE
 import pandas as pd  
-# import dask.dataframe as dd
-# from sklearn.model_selection import train_test_split
-# import numpy as np
-# from sklearn.pipeline import make_pipeline
-# from sklearn.preprocessing import StandardScaler
-# from sklearn.svm import SVC
-# from sklearn.metrics import confusion_matrix
-# from sklearn.metrics import classification_report
 import joblib
-# from sklearn.ensemble import RandomForestClassifier
-# from sklearn.datasets import make_classification
-# from sklearn.naive_bayes import GaussianNB
-# from sklearn.metrics import roc_curve, auc
-# from sklearn.metrics import roc_auc_score
-# from dash.dependencies import Input, Output, State
-# from sklearn.metrics import multilabel_confusion_matrix
 import base64, io, os
 from dash import  dash_table
-# from flask import Flask, Response
-
-# from dash import Dash, dcc, html, Input, Output
-# from dash import State, MATCH, ALL
-# from jupyter_dash import JupyterDash
 import dash
 import pandas as pd
-
-from dash import dash_table as dt
 from dash import dash_table
 import pickle
-
 from dash.dependencies import Input, Output, State, ALL, MATCH
-# import dash_html_components as html
-# import dash_core_components as dcc
 import json
-
 from functools import reduce
-
-import pickle
-
-import dash
-import dash_bootstrap_components as dbc
-# import dash_core_components as dcc
-# import dash_html_components as html
-# from dash.dependencies import Input, Output
-
-# import dash_bootstrap_components as dbc
 from dash import Input, Output, State, html
-
-# import dash_dangerously_set_inner_html
-
 from tqdm.notebook import trange, tqdm
 import pickle
-# import torch
 import numpy as np
 import pandas as pd
-# import datasets
-# from datasets import Dataset
-# from datasets import load_metric
-# from datasets import load_dataset
-# from sklearn.model_selection import train_test_split
-
 from cryptography.fernet import Fernet
 import json
 import io, base64, os
@@ -667,5 +610,7 @@ app.layout = html.Div([sidebar, maindiv])
     
 # app.run_server(debug=False,mode="external",host='localhost', port=8805)
 if __name__ == '__main__':
-    app.run_server(debug=False,mode="external",host='localhost', port=8850)
+    app.run_server(debug=False,
+        # mode="external",host='localhost', 
+        port=8850)
 
