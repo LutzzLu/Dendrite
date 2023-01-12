@@ -2,20 +2,25 @@ import dash
 # import dash_auth
 import dash_auth
 from users import USERNAME_PASSWORD_PAIRS
-import dash_core_components as dcc
-import dash_html_components as html
+# import dash_core_components as dcc
+from dash import dcc
+# from dash.dcc import Markdown as dcc_markdown
+# from dash.dcc import Input as dcc_input
+# import dash_html_components as html
+import dash as html
 import plotly
 
 import dash_bootstrap_components as dbc
 import dash_daq as dq
 # import dash_core_components as dcc
-from dash import dcc
-# import dash_html_components as html
-from dash import html
+# from dash import dcc
+# # import dash_html_components as html
+# from dash import html
 from jupyter_dash import JupyterDash
 from dash import Dash
 # from sklearn.manifold import TSNE
 import pandas as pd  
+# import dask.dataframe as dd
 # from sklearn.model_selection import train_test_split
 # import numpy as np
 # from sklearn.pipeline import make_pipeline
@@ -29,15 +34,15 @@ import joblib
 # from sklearn.naive_bayes import GaussianNB
 # from sklearn.metrics import roc_curve, auc
 # from sklearn.metrics import roc_auc_score
-from dash.dependencies import Input, Output, State
+# from dash.dependencies import Input, Output, State
 # from sklearn.metrics import multilabel_confusion_matrix
 import base64, io, os
 from dash import  dash_table
-from flask import Flask, Response
+# from flask import Flask, Response
 
 # from dash import Dash, dcc, html, Input, Output
 # from dash import State, MATCH, ALL
-from jupyter_dash import JupyterDash
+# from jupyter_dash import JupyterDash
 import dash
 import pandas as pd
 
@@ -46,13 +51,9 @@ from dash import dash_table
 import pickle
 
 from dash.dependencies import Input, Output, State, ALL, MATCH
-import dash_html_components as html
-import dash_core_components as dcc
+# import dash_html_components as html
+# import dash_core_components as dcc
 import json
-
-# from copy import copy
-
-# import ast
 
 from functools import reduce
 
@@ -60,11 +61,11 @@ import pickle
 
 import dash
 import dash_bootstrap_components as dbc
-import dash_core_components as dcc
-import dash_html_components as html
-from dash.dependencies import Input, Output
+# import dash_core_components as dcc
+# import dash_html_components as html
+# from dash.dependencies import Input, Output
 
-import dash_bootstrap_components as dbc
+# import dash_bootstrap_components as dbc
 from dash import Input, Output, State, html
 
 # import dash_dangerously_set_inner_html
