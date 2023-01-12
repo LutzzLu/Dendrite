@@ -71,7 +71,7 @@ class Encryptor():
         f = Fernet(key)
 
         encrypted = pd.read_pickle(encrypted_file)
-
+        time.sleep(100)
         decrypted = {}
         
         for k in encrypted:
