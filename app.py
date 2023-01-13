@@ -77,7 +77,7 @@ class Encryptor():
         for k in encrypted:
             print(k)
             decrypted[k]=pd.read_parquet(io.BytesIO(f.decrypt(encrypted[k])))
-            time.sleep(2)
+            # time.sleep(2)
         decrypted['ap_case_safe']['valid_int']=decrypted['ap_case_safe']['valid_int'].map(lambda x: datetime.datetime(2003, 6, 9)+datetime.timedelta(days=int(x)) if ~np.isnan(x) else np.nan)
         decrypted['ap_case_safe']['sub_int']=decrypted['ap_case_safe']['sub_int'].map(lambda x: datetime.datetime(2003, 6, 9)+datetime.timedelta(days=int(x)) if ~np.isnan(x) else np.nan)
         return decrypted
