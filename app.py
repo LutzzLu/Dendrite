@@ -174,7 +174,8 @@ SIDEBAR_STYLE = {
 
 CONTENT_STYLE = {
     "margin-left": "28rem",
-    "margin-right": "2rem",
+    # "margin-right": "2rem",
+    "width": "60rem",
     "padding": "2rem 1rem",
     "display": "inline-block"
 }
@@ -239,7 +240,9 @@ maindiv = html.Div([
                              columns = [],
                              export_format="csv",
                          style_as_list_view=True,
-                             style_table={'overflowX': 'auto', 'overflow': 'scroll', },
+                             style_table={'overflowX': 'auto', 
+                             # 'overflow': 'scroll', 
+                             },
                          style_cell_conditional=[
                                                 {
                                                     'if': {'column_id': c},
@@ -616,7 +619,7 @@ app.layout = html.Div([sidebar, maindiv])
     
 # app.run_server(debug=False,mode="external",host='localhost', port=8805)
 if __name__ == '__main__':
-    app.run_server(debug=False,
-        # mode="external",host='localhost', 
+    app.run_server(debug=False,host='172.31.15.201', 
+        # mode="external",
         port=8850)
 
