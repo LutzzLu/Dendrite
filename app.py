@@ -502,11 +502,24 @@ def display_table(n_clicks,
             
             final_index = list(search_table['id_safe'][search_table[column_name].str.lower().str.contains(keyword)])
             
-            final_output_data_list = []
-            for one_table in final_input:
-                final_output_data_list.append(data_dict[one_table][data_dict[one_table]['id_safe'].isin(final_index)])
 
-            final_data = reduce(lambda  left,right: pd.merge(left,right,on=['id_safe'], how='outer'), final_output_data_list)
+            for one_table_index in range(len(final_input)):
+                one_table = final_input[one_table_index]
+                if one_table_index == 0:
+                    final_data = data_dict[one_table][data_dict[one_table]['id_safe'].isin(final_index)]
+                else:
+                    final_data = pd.merge(final_data, 
+                                          data_dict[one_table][data_dict[one_table]['id_safe'].isin(final_index)], 
+                                          on=['id_safe'], how='outer')
+            # final_output_data_list = []
+            # for one_table in final_input:
+            #     final_output_data_list.append(data_dict[one_table][data_dict[one_table]['id_safe'].isin(final_index)])
+
+            # change the merge part and try to reduce memory
+            # only take a small part of the id, and then merge the tables
+            # multiple keywords in one filter unit
+            # add a preview, maybe later
+            # final_data = reduce(lambda  left,right: pd.merge(left,right,on=['id_safe'], how='outer'), final_output_data_list)
 #             final_data = final_data.head(100)
             
         else:
@@ -580,11 +593,19 @@ def display_table(n_clicks,
                     conbination_index = 0
 
             final_index = total_index_dict[str(logic_input)]
-            final_output_data_list = []
-            for one_table in final_input:
-                final_output_data_list.append(data_dict[one_table][data_dict[one_table]['id_safe'].isin(final_index)])
+            for one_table_index in range(len(final_input)):
+                one_table = final_input[one_table_index]
+                if one_table_index == 0:
+                    final_data = data_dict[one_table][data_dict[one_table]['id_safe'].isin(final_index)]
+                else:
+                    final_data = pd.merge(final_data, 
+                                          data_dict[one_table][data_dict[one_table]['id_safe'].isin(final_index)], 
+                                          on=['id_safe'], how='outer')
+            # final_output_data_list = []
+            # for one_table in final_input:
+            #     final_output_data_list.append(data_dict[one_table][data_dict[one_table]['id_safe'].isin(final_index)])
 
-            final_data = reduce(lambda  left,right: pd.merge(left,right,on=['id_safe'], how='outer'), final_output_data_list)
+            # final_data = reduce(lambda  left,right: pd.merge(left,right,on=['id_safe'], how='outer'), final_output_data_list)
 #             final_data = final_data.head(100)
       
         filtering_expressions = filter_query.split(' && ')
