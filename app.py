@@ -75,7 +75,7 @@ class Encryptor():
         decrypted = {}
         
         for k in encrypted:
-            print(k)
+            # print(k)
             decrypted[k]=pd.read_parquet(io.BytesIO(f.decrypt(encrypted[k])))
             # time.sleep(2)
         decrypted['ap_case_safe']['valid_int']=decrypted['ap_case_safe']['valid_int'].map(lambda x: datetime.datetime(2003, 6, 9)+datetime.timedelta(days=int(x)) if ~np.isnan(x) else np.nan)
@@ -428,35 +428,40 @@ def set_display_filters_info(table_dropdown, column_dropdown,
 @app.callback(
     Output("logic_input", "value"),
     Input("display_selected_values_2", "children"),
+    Input({"type": "filter_badge", "index": ALL}, "children"),
+    Input({"type": "logic_choice", "index": ALL}, "value"),
 )
 
-def display_logic_input(display_selected_values_2):
+def display_logic_input(display_selected_values_2, filter_badge, logic_choice):
     
     return_string = ''
     
-    if len(list(all_chain_list.keys())) == 1:
-        return_string = '(1)'
+    if len(filter_badge) == 1:
+        return_string = '(' + str(int(filter_badge[0][9:-2])) + ')'
         return return_string
-        
-    if len(list(all_chain_list.keys())) == 2:
-        return_string = '(1 ' + str(all_chain_list['2'][3]) + ' 2)'
+    
+    if len(filter_badge) == 2:
+        return_string = '(' + str(int(filter_badge[0][9:-2])) + ' '+ str(logic_choice[1])+ ' '+ str(int(filter_badge[1][9:-2])) + ')'
         return return_string
     
     key_count = 0
-    for one_key in list(all_chain_list.keys()):
+    for one_key_index in range(len(filter_badge)):
+        one_filter = str(int(filter_badge[one_key_index][9:-2]))
+        one_logic = logic_choice[one_key_index]
         if key_count == 0:
-            return_string = '(' + str(one_key) + ')'
+            return_string = '(' + str(one_filter) + ')'
         if key_count == 1:
-            return_string = '(1 ' + str(all_chain_list['2'][3]) + ' 2)'
+            return_string = '('+str(int(filter_badge[0][9:-2]))+' '+str(logic_choice[1])+' '+str(int(filter_badge[1][9:-2]))+')'
         else:
             return_string = '(' + return_string
             return_string += ' '
-            return_string += str(all_chain_list[one_key][3])
+            return_string += one_logic
             return_string += ' '
-            return_string += str(one_key)
+            return_string += one_filter
             return_string += ')'
         
         key_count += 1
+
     return return_string
 
 @app.callback(
@@ -519,6 +524,8 @@ def display_table(n_clicks,
             # only take a small part of the id, and then merge the tables
             # multiple keywords in one filter unit
             # add a preview, maybe later
+
+            
             # final_data = reduce(lambda  left,right: pd.merge(left,right,on=['id_safe'], how='outer'), final_output_data_list)
 #             final_data = final_data.head(100)
             
