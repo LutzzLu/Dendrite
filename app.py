@@ -395,6 +395,16 @@ def suggest_locs(input_1, table_dropdown, column_dropdown):
 
 def set_display_filters_info(table_dropdown, column_dropdown, 
                              input_1, radio_button_1, logic_choice, filter_badge):
+
+    process_or_not = 0
+    for one_instance in column_dropdown:
+        if one_instance != None:
+            process_or_not = 1
+    if process_or_not == 1:
+        while column_dropdown[0] == None:
+            column_dropdown = column_dropdown[1:]
+            column_dropdown.append(None)
+            
 #     print(filter_badge)
     filter_badge_int_list = []
     for one_badge in filter_badge:
@@ -525,7 +535,7 @@ def display_table(n_clicks,
             # multiple keywords in one filter unit
             # add a preview, maybe later
 
-            
+
             # final_data = reduce(lambda  left,right: pd.merge(left,right,on=['id_safe'], how='outer'), final_output_data_list)
 #             final_data = final_data.head(100)
             
