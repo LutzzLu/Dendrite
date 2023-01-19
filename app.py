@@ -404,7 +404,7 @@ def set_display_filters_info(table_dropdown, column_dropdown,
         while column_dropdown[0] == None:
             column_dropdown = column_dropdown[1:]
             column_dropdown.append(None)
-            
+
 #     print(filter_badge)
     filter_badge_int_list = []
     for one_badge in filter_badge:
@@ -510,13 +510,18 @@ def display_table(n_clicks,
             keyword = one_filter_list[4]
             exact_or_not = one_filter_list[2]
             
-            if exact_or_not == 'Exactly Match':
-                keyword = ' ' + keyword + ' '
-            else:
-                keyword = keyword
+            keyword_list = keyword.split('|')
             
-            final_index = list(search_table['id_safe'][search_table[column_name].str.lower().str.contains(keyword)])
+            final_index = []
             
+            for one_keyword in keyword_list:       
+                if exact_or_not == 'Exactly Match':
+                    one_keyword = ' ' + one_keyword + ' '
+                else:
+                    one_keyword = one_keyword
+                    
+                one_time_index = list(search_table['id_safe'][search_table[column_name].str.lower().str.contains(one_keyword)])
+                final_index = list(set(final_index + one_time_index))
 
             for one_table_index in range(len(final_input)):
                 one_table = final_input[one_table_index]
@@ -551,13 +556,26 @@ def display_table(n_clicks,
                     column_name = one_filter_list[1]
                     keyword = one_filter_list[4]
                     exact_or_not = one_filter_list[2]
+
+                    keyword_list = keyword.split('|')
+            
+                    index_list = []
+
+                    for one_keyword in keyword_list:       
+                        if exact_or_not == 'Exactly Match':
+                            one_keyword = ' ' + one_keyword + ' '
+                        else:
+                            one_keyword = one_keyword
+
+                        one_time_index = list(search_table['id_safe'][search_table[column_name].str.lower().str.contains(one_keyword)])
+                        index_list = list(set(index_list + one_time_index))
                     
-                    if exact_or_not == 'Exactly Match':
-                        keyword = ' ' + keyword + ' '
-                    else:
-                        keyword = keyword
+                    # if exact_or_not == 'Exactly Match':
+                    #     keyword = ' ' + keyword + ' '
+                    # else:
+                    #     keyword = keyword
                     
-                    index_list = list(search_table['id_safe'][search_table[column_name].str.lower().str.contains(keyword)])
+                    # index_list = list(search_table['id_safe'][search_table[column_name].str.lower().str.contains(keyword)])
 
                     total_index_dict[str(one_number)] = index_list
             possible_conbination_list = []
