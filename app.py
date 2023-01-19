@@ -191,10 +191,11 @@ sidebar = html.Div(
         dbc.Offcanvas(
             html.Div([
             html.P("1. Add filters, select tables, columns and input keywords"),
-                html.P("2. Input logic statement, like (1 AND (3 OR 2)). Use index according to Filter Info List. Use parentheses and capital AND, OR, NOT"),
-                html.P("3. Select one or multiple tables you'd like to merge together"),
-                html.P("4. Click Final Query, and use page flip function to see more rows"),
-                html.P("5. Click Export button to export data from final query"),
+            html.P("2. If input multiple keywords using or relationship, use '|' to seperate keywords"),
+                html.P("3. Input logic statement, like (1 AND (3 OR 2)). Use index according to Filter Info List. Use parentheses and capital AND, OR, NOT"),
+                html.P("4. Select one or multiple tables you'd like to merge together"),
+                html.P("5. Click Final Query, and use page flip function to see more rows"),
+                html.P("6. Click Export button to export data from final query"),
             ]),
             id="offcanvas-scrollable",
             placement = 'end',
