@@ -502,6 +502,12 @@ def display_table(n_clicks,
     if n_clicks is None:
         raise PreventUpdate
     else: 
+        if page_size not in [2, 5, 10, 20, 50, 100]:
+            page_size = 5
+        else:
+            page_size = int(page_size)
+
+            
         all_filter_dict = all_chain_list
 #         print(all_filter_dict)
         filter_number = int(list(all_filter_dict.keys())[-1])
