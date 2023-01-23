@@ -496,7 +496,9 @@ def display_logic_input(display_selected_values_2, filter_badge, logic_choice):
 
 def display_table(n_clicks, 
                   page_current, page_size, 
-                  sort_by, filter_query, logic_input,
+                  sort_by, filter_query, 
+                  page_size_choice,
+                  logic_input,
                   display_selected_values_2,
                   final_input):
     if n_clicks is None:
@@ -507,7 +509,7 @@ def display_table(n_clicks,
         else:
             page_size = int(page_size)
 
-            
+
         all_filter_dict = all_chain_list
 #         print(all_filter_dict)
         filter_number = int(list(all_filter_dict.keys())[-1])
