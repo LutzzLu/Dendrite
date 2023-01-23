@@ -495,9 +495,10 @@ def display_logic_input(display_selected_values_2, filter_badge, logic_choice):
 )
 
 def display_table(n_clicks, 
-                  page_current, page_size, 
+                  page_current, 
+                  # page_size, 
                   sort_by, filter_query, 
-                  page_size_choice,
+                  page_size,
                   logic_input,
                   display_selected_values_2,
                   final_input):
