@@ -483,13 +483,15 @@ def display_logic_input(display_selected_values_2, filter_badge, logic_choice):
     Input('table', "page_size"),
     Input('table', 'sort_by'),
     Input('table', 'filter_query'),
-    Input('logic_input', 'value'),
+    State('logic_input', 'value'),
+    State("display_selected_values_2", "value"),
     State("final_input", "value"),
 )
 
 def display_table(n_clicks, 
                   page_current, page_size, 
                   sort_by, filter_query, logic_input,
+                  display_selected_values_2,
                   final_input):
     if n_clicks is None:
         raise PreventUpdate
