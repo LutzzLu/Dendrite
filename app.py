@@ -231,6 +231,12 @@ maindiv = html.Div([
             options = drop_down_menu_list,
             multi=True,
         ),
+        dcc.Dropdown(
+                    id="page_size_choice",
+        placeholder = 'Select Page Size',
+            options = [2, 5, 10, 20, 50, 100],
+#             multi=True,
+        ),
     html.Br(),
     dbc.Button(
                     "Final Query",
@@ -480,9 +486,9 @@ def display_logic_input(display_selected_values_2, filter_badge, logic_choice):
     Output("table", "columns"),],
     Input("final-query", "n_clicks"),
     Input('table', "page_current"),
-    Input('table', "page_size"),
     Input('table', 'sort_by'),
     Input('table', 'filter_query'),
+    State('page_size_choice', "value"),
     State('logic_input', 'value'),
     State("display_selected_values_2", "value"),
     State("final_input", "value"),
