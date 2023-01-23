@@ -243,6 +243,17 @@ maindiv = html.Div([
                     id="final-query",
                     n_clicks=0,
                 ),
+    dbc.Button(
+            "Table Rows Summary",
+            id="popover-target",
+            className="me-1",
+        ),
+    dbc.Popover(
+        id = 'popover_button',
+            children = 'Please Query First',
+            target="popover-target",
+            trigger="click",
+        ),
     dash_table.DataTable(id = "table", 
                              columns = [],
                              export_format="csv",
@@ -483,7 +494,8 @@ def display_logic_input(display_selected_values_2, filter_badge, logic_choice):
 
 @app.callback(
     [Output("table", "data"),
-    Output("table", "columns"),],
+    Output("table", "columns"),
+    Output("popover_button", "children"),],
     Input("final-query", "n_clicks"),
     Input('table', "page_current"),
     Input('table', 'sort_by'),
@@ -687,7 +699,10 @@ def display_table(n_clicks,
         size = page_size
         
         final_data_columns = [{"name": i, "id": i} for i in dff.columns]
-        return dff.iloc[page * size: (page + 1) * size].to_dict('records'), final_data_columns
+
+        popover_string = '  ' + str(dff.shape[0])+' rows, '+str(len(list(set(list(dff['id_safe'])))))+' unique ids  '
+
+        return dff.iloc[page * size: (page + 1) * size].to_dict('records'), final_data_columns, popover_string
 
 app.layout = html.Div([sidebar, maindiv])
     
