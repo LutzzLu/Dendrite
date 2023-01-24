@@ -700,8 +700,13 @@ def display_table(n_clicks,
         
         final_data_columns = [{"name": i, "id": i} for i in dff.columns]
 
-        popover_string = '  ' + str(dff.shape[0])+' rows, '+str(len(list(set(list(dff['id_safe'])))))+' unique ids  '
-
+        string_1 = str(dff.shape[0])
+        string_2 = str(len(list(set(list(dff['id_safe'])))))
+        
+        dff = pd.merge(dff, data_dict['pt_cases_safe'], on=['id_safe'], how='left')
+        string_3 = str(len(list(set(list(dff['pt_id_safe'])))))
+        
+        popover_string = '~  ' +string_1+' rows, '+string_2+' unique ids, '+string_3+' unique patient ids  ~'
         return dff.iloc[page * size: (page + 1) * size].to_dict('records'), final_data_columns, popover_string
 
 app.layout = html.Div([sidebar, maindiv])
