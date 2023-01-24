@@ -539,6 +539,9 @@ def display_table(n_clicks,
             column_name = one_filter_list[1]
             keyword = one_filter_list[4]
             exact_or_not = one_filter_list[2]
+
+            keyword = re.sub(r'\| ', '|',  keyword)
+            keyword = re.sub(r' \|', '|',  keyword)
             
             keyword_list = keyword.split('|')
             
@@ -586,6 +589,9 @@ def display_table(n_clicks,
                     column_name = one_filter_list[1]
                     keyword = one_filter_list[4]
                     exact_or_not = one_filter_list[2]
+
+                    keyword = re.sub(r'\| ', '|',  keyword)
+                    keyword = re.sub(r' \|', '|',  keyword)
 
                     keyword_list = keyword.split('|')
             
