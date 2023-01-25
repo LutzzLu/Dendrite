@@ -91,7 +91,7 @@ path_db=encryptor.load_decrypt(loaded_key, os.path.join(parent_directory,'text_d
 metadata_dict = {}
 for i in range(1, 18):
     append_df = pd.read_csv('./Dendrite/metadata_'+str(i)+'.csv')
-    append_df = append_df.drop(columns=['B', 'C'])
+    append_df = append_df.drop(columns=['type'])
     metadata_dict['metadata_'+str(i)] = append_df
 
 data_dict = path_db
