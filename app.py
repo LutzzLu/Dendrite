@@ -90,7 +90,9 @@ path_db=encryptor.load_decrypt(loaded_key, os.path.join(parent_directory,'text_d
 
 metadata_dict = {}
 for i in range(1, 18):
-    metadata_dict['metadata_'+str(i)] = pd.read_csv('./Dendrite/metadata_'+str(i)+'.csv')
+    append_df = pd.read_csv('./Dendrite/metadata_'+str(i)+'.csv')
+    append_df = append_df.drop(columns=['B', 'C'])
+    metadata_dict['metadata_'+str(i)] = append_df
 
 data_dict = path_db
 drop_down_menu_list = list(data_dict.keys())
@@ -557,8 +559,8 @@ sidebar = html.Div(
                 dbc.ModalHeader(dbc.ModalTitle("Database Description")),
                 dbc.ModalBody(
                 dbc.Tabs([
-                    dbc.Tab(tab_0_1_content, label="General Notes"),
-                    dbc.Tab(tab_0_2_content, label="Stain Pipeline"),
+                    # dbc.Tab(tab_0_1_content, label="General Notes"),
+                    # dbc.Tab(tab_0_2_content, label="Stain Pipeline"),
                     dbc.Tab(tab_1_content, label="ap_case"),
                     dbc.Tab(tab_2_content, label="case_parts"),
                     dbc.Tab(tab_3_content, label="diagnoses"),
