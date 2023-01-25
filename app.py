@@ -88,6 +88,10 @@ encryptor=Encryptor()
 loaded_key=encryptor.key_load(os.path.join(parent_directory,'path_db_v2.key'))
 path_db=encryptor.load_decrypt(loaded_key, os.path.join(parent_directory,'text_db_encrypted_v2.pkl'))
 
+metadata_dict = {}
+for i in range(1, 18):
+    metadata_dict['metadata_'+str(i)] = pd.read_csv('metadata_'+str(i)+'.csv')
+
 data_dict = path_db
 drop_down_menu_list = list(data_dict.keys())
 all_chain_list = {}
@@ -181,6 +185,361 @@ CONTENT_STYLE = {
     "display": "inline-block"
 }
 
+tab_0_1_content = dbc.Card(
+    dbc.CardBody(
+        [
+            html.P("The database is not really designed, at present, to enforce consistency or otherwise to exercise constraints.", className="card-text"),
+            html.P("It was originally conceived as being quite static, with sporadic batch updates, in order to limit the amount of information exposed by the update schedule.", className="card-text"),
+            html.P("However, given that dates are currently part of the tables, that design decision is not currently providing benefit.", className="card-text"),
+            html.Br(),
+            html.P("In short, there are no constraints in the database itself.", className="card-text"),
+            html.P("It is anticipated that individual users will have read-only access to the files; Discovery permissions should be configured to reflect this.", className="card-text"),
+            html.Br(),
+            html.P("Any field value consisting of all 9s is to be considered an empty field; these are leftover from the debugging process, but I do sometimes find them helpful.", className="card-text"),
+            html.P('Broadly, the presence of "999" as opposed to the absence of an entry tells us that the relevant pipeline section started, but did not identify a target.', className="card-text"),
+        ]
+    ),
+    className="mt-3",
+)
+
+tab_0_2_content = dbc.Card(
+    dbc.CardBody(
+        [
+            html.P("Broadly, we start by lowercasing the expected sections for stain retrieval.", className="card-text"),
+            html.P('There is an initial filter pass, made up of a series of simple find-and-replace operations, as found in "stains_preprocess.tsv"', className="card-text"),
+            html.P("Note that these operations are sequential, and run one at a time over the text of each individual report.", className="card-text"),
+            html.P("It follows that operations at the top of the file may affect those below them.", className="card-text"),
+            html.Br(),
+            html.P("After that, there are two stain pipelines:", className="card-text"),
+            html.Br(),
+            html.P('The pipeline that produces "stains_short" only records the presence or absence of each word in its dictionary.', className="card-text"),
+            html.P('This is also a simple str.find operation.', className="card-text"),
+            html.P('Most stains have unambiguous names ("ckae1/3" does not appear much in common English), and it is rare for a pathologist to directly state that a stain was not performed.', className="card-text"),
+            html.P('Nevertheless, this could conceivably introduce confusion in the event of constructions like "MelanA was performed on the prior biopsy, and negative." ', className="card-text"),
+            html.P('Such language is also not very frequent, and the risks of going awry on it could be controlled by excluding the "Discussion" and "Comment"  sections.', className="card-text"),
+            html.P('Such an exclusion would come at a loss of more true positives than false negatives, however, so caution is advised.', className="card-text"),
+            html.Br(),
+            html.P('The pipeline that produces "stains_full" is more complex.', className="card-text"),
+            html.P('It relies on identifying a string matching the appearance of a block (such as "A1", "B12", etc) or series of blocks ("A1, B12") at the beginning of a line.', className="card-text"),
+            html.P('If it finds one, it attempts to find a stain name after the list of blocks ends, by looking it up in its dictionary.', className="card-text"),
+            html.P("Note that this happens after the preprocessing step, so although preprocessing simplifies the actual work, there's a potential for preprocessing errors to cascade.", className="card-text"),
+            html.P('Non-identification of stains is the most common form of this error (aka the way I shot myself in the foot the most times).', className="card-text"),
+            html.Br(),
+            html.P('If a stain or series of stains is identified, then everything until the next stain name, block listing, or the end of the report section is interpreted as being the description of that stain.', className="card-text"),
+            html.P('A separate method (report.block_processor) exists solely to parse lists of blocks, and is called whenever it is necessary to do so.', className="card-text"),
+            html.Br(),
+            html.P('Note that cytopathology cases frequently, even when they provide a tabular listing, fail to specify which block the stains were performed on.', className="card-text"),
+            html.P('As a result, the "stains_full" pipeline misses a lot of cyto cases; use the "stains_short" entries exclusively for these.', className="card-text"),
+        ]
+    ),
+    className="mt-3",
+)
+
+tab_1_content = dbc.Card(
+    dbc.CardBody(
+        [
+            dash_table.DataTable(metadata_dict['metadata_1'].to_dict('records'), 
+                                 [{"name": i, "id": i} for i in metadata_dict['metadata_1'].columns], 
+                                 style_table={'overflowX': 'auto'}, 
+                                 style_cell={
+                                'height': 'auto',
+                                'minWidth': '100px', 
+                                'maxWidth': '1500px',
+                                
+                                'whiteSpace': 'normal'
+                                },
+                                )
+        ]
+    ),
+    className="mt-3",
+)
+
+tab_2_content = dbc.Card(
+    dbc.CardBody(
+        [
+            html.P('Note: 1:1 to case', className="card-text"),
+            dash_table.DataTable(metadata_dict['metadata_2'].to_dict('records'), [{"name": i, "id": i} for i in metadata_dict['metadata_2'].columns], 
+                                 style_table={'overflowX': 'auto'}, 
+                                 style_cell={
+                                'height': 'auto',
+                                'minWidth': '100px', 
+                                'maxWidth': '1500px',
+                                
+                                'whiteSpace': 'normal'
+                                },)
+        ]
+    ),
+    className="mt-3",
+)
+
+tab_3_content = dbc.Card(
+    dbc.CardBody(
+        [
+            html.P('Note: 1:1 to case', className="card-text"),
+            dash_table.DataTable(metadata_dict['metadata_3'].to_dict('records'), [{"name": i, "id": i} for i in metadata_dict['metadata_3'].columns], 
+                                 style_table={'overflowX': 'auto'}, 
+                                 style_cell={
+                                'height': 'auto',
+                                'minWidth': '100px', 
+                                'maxWidth': '1500px',
+                                
+                                'whiteSpace': 'normal'
+                                },)
+        ]
+    ),
+    className="mt-3",
+)
+
+tab_4_content = dbc.Card(
+    dbc.CardBody(
+        [
+            html.P('Note: 1:1 to case', className="card-text"),
+            dash_table.DataTable(metadata_dict['metadata_4'].to_dict('records'), [{"name": i, "id": i} for i in metadata_dict['metadata_4'].columns], 
+                                 style_table={'overflowX': 'auto'}, 
+                                 style_cell={
+                                'height': 'auto',
+                                'minWidth': '100px', 
+                                'maxWidth': '1500px',
+                                
+                                'whiteSpace': 'normal'
+                                },)
+        ]
+    ),
+    className="mt-3",
+)
+
+tab_5_content = dbc.Card(
+    dbc.CardBody(
+        [
+            html.P('Note: many-to-one to case', className="card-text"),
+            dash_table.DataTable(metadata_dict['metadata_5'].to_dict('records'), [{"name": i, "id": i} for i in metadata_dict['metadata_5'].columns], 
+                                 style_table={'overflowX': 'auto'}, 
+                                 style_cell={
+                                'height': 'auto',
+                                'minWidth': '100px', 
+                                'maxWidth': '1500px',
+                                
+                                'whiteSpace': 'normal'
+                                },)
+        ]
+    ),
+    className="mt-3",
+)
+
+tab_6_content = dbc.Card(
+    dbc.CardBody(
+        [
+            html.P('Note: many-to-one to case', className="card-text"),
+            dash_table.DataTable(metadata_dict['metadata_6'].to_dict('records'), [{"name": i, "id": i} for i in metadata_dict['metadata_6'].columns], 
+                                 style_table={'overflowX': 'auto'}, 
+                                 style_cell={
+                                'height': 'auto',
+                                'minWidth': '100px', 
+                                'maxWidth': '1500px',
+                                
+                                'whiteSpace': 'normal'
+                                },)
+        ]
+    ),
+    className="mt-3",
+)
+
+tab_7_content = dbc.Card(
+    dbc.CardBody(
+        [
+            dash_table.DataTable(metadata_dict['metadata_7'].to_dict('records'), [{"name": i, "id": i} for i in metadata_dict['metadata_7'].columns], 
+                                 style_table={'overflowX': 'auto'}, 
+                                 style_cell={
+                                'height': 'auto',
+                                'minWidth': '100px', 
+                                'maxWidth': '1500px',
+                                
+                                'whiteSpace': 'normal'
+                                },)
+        ]
+    ),
+    className="mt-3",
+)
+
+tab_8_content = dbc.Card(
+    dbc.CardBody(
+        [
+            html.P('Note: many-to-one to case', className="card-text"),
+            dash_table.DataTable(metadata_dict['metadata_8'].to_dict('records'), [{"name": i, "id": i} for i in metadata_dict['metadata_8'].columns], 
+                                 style_table={'overflowX': 'auto'}, 
+                                 style_cell={
+                                'height': 'auto',
+                                'minWidth': '100px', 
+                                'maxWidth': '1500px',
+                                
+                                'whiteSpace': 'normal'
+                                },)
+        ]
+    ),
+    className="mt-3",
+)
+
+tab_9_content = dbc.Card(
+    dbc.CardBody(
+        [
+            html.P('Note: many-to-one to case', className="card-text"),
+            dash_table.DataTable(metadata_dict['metadata_9'].to_dict('records'), [{"name": i, "id": i} for i in metadata_dict['metadata_9'].columns], 
+                                 style_table={'overflowX': 'auto'}, 
+                                 style_cell={
+                                'height': 'auto',
+                                'minWidth': '100px', 
+                                'maxWidth': '1500px',
+                                
+                                'whiteSpace': 'normal'
+                                },)
+        ]
+    ),
+    className="mt-3",
+)
+
+tab_10_content = dbc.Card(
+    dbc.CardBody(
+        [
+            html.P('Note: many-to-one to case', className="card-text"),
+            dash_table.DataTable(metadata_dict['metadata_10'].to_dict('records'), [{"name": i, "id": i} for i in metadata_dict['metadata_10'].columns], 
+                                 style_table={'overflowX': 'auto'}, 
+                                 style_cell={
+                                'height': 'auto',
+                                'minWidth': '100px', 
+                                'maxWidth': '1500px',
+                                
+                                'whiteSpace': 'normal'
+                                },)
+        ]
+    ),
+    className="mt-3",
+)
+
+tab_11_content = dbc.Card(
+    dbc.CardBody(
+        [
+            html.P('Note: many-to-one to case; valid only for reports late in the dataset; earlier synoptics are not as well-delineated.', className="card-text"),
+            dash_table.DataTable(metadata_dict['metadata_11'].to_dict('records'), [{"name": i, "id": i} for i in metadata_dict['metadata_11'].columns], 
+                                 style_table={'overflowX': 'auto'}, 
+                                 style_cell={
+                                'height': 'auto',
+                                'minWidth': '100px', 
+                                'maxWidth': '1500px',
+                                
+                                'whiteSpace': 'normal'
+                                },)
+        ]
+    ),
+    className="mt-3",
+)
+
+tab_12_content = dbc.Card(
+    dbc.CardBody(
+        [
+            html.P('Note: Lots of changes in how we report flows over the years; may not correctly identify all aspects of cases with flow.', className="card-text"),
+            dash_table.DataTable(metadata_dict['metadata_12'].to_dict('records'), [{"name": i, "id": i} for i in metadata_dict['metadata_12'].columns], 
+                                 style_table={'overflowX': 'auto'}, 
+                                 style_cell={
+                                'height': 'auto',
+                                'minWidth': '100px', 
+                                'maxWidth': '1500px',
+                                
+                                'whiteSpace': 'normal'
+                                },)
+        ]
+    ),
+    className="mt-3",
+)
+
+tab_13_content = dbc.Card(
+    dbc.CardBody(
+        [
+            html.P('Note: Only cases which a pathologist has handled (i.e. cases not read as NILM) have matching MRNs.  Many of these fields are Yes/No most of the time, but sometimes someone writes us a history in one or more of them.', className="card-text"),
+            dash_table.DataTable(metadata_dict['metadata_13'].to_dict('records'), [{"name": i, "id": i} for i in metadata_dict['metadata_13'].columns], 
+                                 style_table={'overflowX': 'auto'}, 
+                                 style_cell={
+                                'height': 'auto',
+                                'minWidth': '100px', 
+                                'maxWidth': '1500px',
+                                
+                                'whiteSpace': 'normal'
+                                },)
+        ]
+    ),
+    className="mt-3",
+)
+
+tab_14_content = dbc.Card(
+    dbc.CardBody(
+        [
+            html.P('Note: Many-to-one to surgical accessions - a patient can be positive for multiple HPV types', className="card-text"),
+            dash_table.DataTable(metadata_dict['metadata_14'].to_dict('records'), [{"name": i, "id": i} for i in metadata_dict['metadata_14'].columns], 
+                                 style_table={'overflowX': 'auto'}, 
+                                 style_cell={
+                                'height': 'auto',
+                                'minWidth': '100px', 
+                                'maxWidth': '1500px',
+                                
+                                'whiteSpace': 'normal'
+                                },)
+        ]
+    ),
+    className="mt-3",
+)
+
+tab_15_content = dbc.Card(
+    dbc.CardBody(
+        [
+            html.P('Note: All non-GYN cases, including urines.  Prior to the creation of the FN prefix (about 20% of the dataset falls into this timeframe), also included FNAs.', className="card-text"),
+            dash_table.DataTable(metadata_dict['metadata_15'].to_dict('records'), [{"name": i, "id": i} for i in metadata_dict['metadata_15'].columns], 
+                                 style_table={'overflowX': 'auto'}, 
+                                 style_cell={
+                                'height': 'auto',
+                                'minWidth': '100px', 
+                                'maxWidth': '1500px',
+                                
+                                'whiteSpace': 'normal'
+                                },)
+        ]
+    ),
+    className="mt-3",
+)
+
+tab_16_content = dbc.Card(
+    dbc.CardBody(
+        [
+            html.P('Note: Immediate assessment data (PATHOLOGIST ONLY at this time) from FNA and NG cases.  Each row is one assessment episode.  See ia_byline in cy_ng table for the identity of the assessing pathologist, as it is extremely rare for two immediate assessments on the same case to be done by different people.', className="card-text"),
+            dash_table.DataTable(metadata_dict['metadata_16'].to_dict('records'), [{"name": i, "id": i} for i in metadata_dict['metadata_16'].columns], 
+                                 style_table={'overflowX': 'auto'}, 
+                                 style_cell={
+                                'height': 'auto',
+                                'minWidth': '100px', 
+                                'maxWidth': '1500px',
+                                
+                                'whiteSpace': 'normal'
+                                },)
+        ]
+    ),
+    className="mt-3",
+)
+
+tab_17_content = dbc.Card(
+    dbc.CardBody(
+        [
+            dash_table.DataTable(metadata_dict['metadata_17'].to_dict('records'), [{"name": i, "id": i} for i in metadata_dict['metadata_17'].columns], 
+                                 style_table={'overflowX': 'auto'}, 
+                                 style_cell={
+                                'height': 'auto',
+                                'minWidth': '100px', 
+                                'maxWidth': '1500px',
+                                
+                                'whiteSpace': 'normal'
+                                },)
+        ]
+    ),
+    className="mt-3",
+)
+
 sidebar = html.Div(
     search_dropdown_datalist_list + 
     [
@@ -189,6 +548,41 @@ sidebar = html.Div(
                    color="primary", className="me-1", size="sm", 
                    id="open-offcanvas-scrollable",
                    n_clicks=0,),
+        dbc.Button("Database Description",
+                   outline=True, 
+                   color="primary", className="me-1", size="sm", 
+                   id="open-xl", n_clicks=0),
+        dbc.Modal(
+            [
+                dbc.ModalHeader(dbc.ModalTitle("Database Description")),
+                dbc.ModalBody(
+                dbc.Tabs([
+                    dbc.Tab(tab_0_1_content, label="General Notes"),
+                    dbc.Tab(tab_0_2_content, label="Stain Pipeline"),
+                    dbc.Tab(tab_1_content, label="ap_case"),
+                    dbc.Tab(tab_2_content, label="case_parts"),
+                    dbc.Tab(tab_3_content, label="diagnoses"),
+                    dbc.Tab(tab_4_content, label="discussions"),
+                    dbc.Tab(tab_5_content, label="gross"),
+                    dbc.Tab(tab_6_content, label="h_and_e"),
+                    dbc.Tab(tab_7_content, label="pt_cases_safe"),
+                    dbc.Tab(tab_8_content, label="scans"),
+                    dbc.Tab(tab_9_content, label="stains_full"),
+                    dbc.Tab(tab_10_content, label="stains_short"),
+                    dbc.Tab(tab_11_content, label="synoptics"),
+                    dbc.Tab(tab_12_content, label="flow"),
+                    dbc.Tab(tab_13_content, label="cy_gyn"),
+                    dbc.Tab(tab_14_content, label="cy_hpv"),
+                    dbc.Tab(tab_15_content, label="cy_ng"),
+                    dbc.Tab(tab_16_content, label="cy_ia"),
+                    dbc.Tab(tab_17_content, label="molecular_result"),
+                ]),),
+            ],
+            id="modal-xl",
+            scrollable=True,
+            size="xl",
+            is_open=False,
+        ),
         dbc.Offcanvas(
             html.Div([
             html.P("1. Add filters, select tables, columns and input keywords"),
@@ -221,7 +615,9 @@ maindiv = html.Div([
     html.H3('Filters info list:'),
     html.H6(id="display_selected_values_2", 
                 ),
-    dcc.Input(
+    html.Hr(),
+    html.Div('Only one logic inside a pair of parentheses'),
+    dbc.Input(
                     id="logic_input",
                     placeholder="Filter logic", 
                     debounce=True, 
@@ -304,6 +700,17 @@ maindiv = html.Div([
     ],
     style=CONTENT_STYLE
 )
+
+@app.callback(
+    Output("modal-xl", "is_open"),
+    Input("open-xl", "n_clicks"),
+    State("modal-xl", "is_open"),
+)
+
+def toggle_modal(n1, is_open):
+    if n1:
+        return not is_open
+    return is_open
 
 @app.callback(
     Output("offcanvas-scrollable", "is_open"),

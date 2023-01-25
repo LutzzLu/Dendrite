@@ -1,0 +1,32 @@
+﻿ap_case,type,note
+id_safe,UUID in varchar,maps 1:1 to surgical accession.  Relationship to patient is separate linking table.
+date_sub,varchar,date case submitted
+date_valid,varchar,date case validated
+pathologist,varchar,name of pathologist signing out case
+qacc,tinyint,"dummy var - does ""qacc"" appear in report text (i.e. was an intradepartmental consultation sought?)"
+dw_doc,tinyint,dummy var - a rather limited measurement of whether the case describes discussion with another physician
+conf,tinyint,dummy var - does the case mention an intradepartmental or consensus conference (a step up from qacc)
+addend,tinyint,dummy var - does the report contain addenda of any kind?
+syn,tinyint,dummy var - does the report have a synoptic?
+frz,tinyint,dummy var - does the report have a frozen?
+steps,tinyint,dummy var - does the report contain any of several common ways of describing additional sections?
+decal,tinyint,dummy var - does the report mention decalcification?
+edta,tinyint,"dummy var - does the report mention edta, a particular kind of decalcification which is slow, but preserves genetic material?"
+ssc,varchar,subspeciality code
+svc,varchar,"service, calculated from subspeciality code at python script runtime.  Dict is inline, not a separate file."
+con,tinyint,I actually don't remember what this is.
+case_refs,int,attempts to count the number of times a DH surgical accession number is mentioned in the report text.
+indecision,int,counts keywords associated with indecision or uncertainty - list is inline.
+lesser_indecision,int,counts keywords associated with a lesser degree of indecision or uncertainty - list is inline.
+negation,int,counts keywords associated with negation - list is inline
+dt_sub,date,calc field - date_sub stored as date rather then text
+dt_valid,date,calc field - date_valid stored as date rather then text
+TAT,int,"calc field - turn around time, measured as valid_int - sub_int"
+valid_int,int,Interval between an arbitrary (secret) date and the validation of the case
+sub_int,int,Interval between an arbitrary (secret) date and the submission of the case
+day_valid,varchar,calc field - day of week
+week_valid,int,calc field - week of year
+year_valid,int,calc field - year
+day_sub,varchar,calc field - day of week
+week_sub,int,calc field - week of year
+year_sub,int,calc field - year

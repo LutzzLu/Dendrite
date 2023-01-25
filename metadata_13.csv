@@ -1,0 +1,19 @@
+﻿cy_gyn,type,note
+id_safe,UUID in varchar,maps 1:1 to surgical accession
+hpv_opt,varchar,"HPV option chosen (reflex, concurrent, no testing are the basic categories)"
+prep,varchar,"Preparation type (smear vs thinprep, etc)"
+source,varchar,cervical/endocervical/vaginal
+lmp,varchar,"In theory, the date of the last menstrual period.  In practice, the data that would be placed in this field are usually mangled by the deidentification algorithm because they're dates (even in the version of the database that is nominally identified).    A smarter approach would be to convert to datetime and subtract it from the submitted date, but date formats are heterogeneous and sometimes as unhelpful as ""last week,"" so it would take me several days I don't have to fix this."
+hormones,varchar,is the patient on hormone therapy?
+hyst,varchar,history of hysterectomy?
+post_partum,varchar,is this a post-partum pap smear?
+preg,varchar,is the patient pregnant at the time of the smear?
+iud,varchar,does the patient have an IUD?
+pelvic_rads,varchar,Does the patient have any history of pelvic radiation?
+prior_gy_tx,varchar,Prior gynecologic treatment?
+hx_abnl_pap_bx,varchar,Is there a history of a prior abnormal pap or cervix biopsy?
+hpv_vacc,varchar,Has the patient ever received the HPV vaccine?
+smoker,varchar,Does the patient smoke?
+des,varchar,Does the patient have a history of in-utero exposure to diethylstilbestrol?
+icd_dx,varchar,ICD10 diagnosis code.  Not present for many reports.
+clin_hx_imp,text,Freetext clinical history and impression.

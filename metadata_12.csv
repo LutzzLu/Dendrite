@@ -1,0 +1,7 @@
+﻿flow,type,note
+id_safe,UUID in varchar,maps 1:1 to surgical accession
+viability,int,attempts to detect percent viability with a regex
+source,varchar,specimen source
+markers,varchar,"comma separated list of markers tested by flow, if detected"
+flowdx,text,"attempts to classify diagnosis section of flow vs surgical case.  Heuristic is usually successful, but not unusual to get some wonky data in here; there is no perfect defining characteristic of diagnosis sections relating to flow, so it's all heuristics."
+flowds,test,"attempts to classify discussion section of flow vs surgical case.  Usually successful, but not unusual to get some wonky data in here."

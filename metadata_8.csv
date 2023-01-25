@@ -1,0 +1,6 @@
+﻿scans,type,note
+id_scans,int,autoincrement; couldn't be arsed to turn off safe updates setting : /
+id_safe,UUID in varchar,maps 1:1 to surgical accession
+slide_id,int,Aperio server slide id
+block,varchar,block (if information available) stained
+link,varchar,calc field - readymade GET request to aperio server; user Aperio credentials needed to login and see the slide.  Doing so is equivalent to viewing identified data for the case due to slide labels.

@@ -1,0 +1,15 @@
+﻿cy_ng,type,note
+id_safe,UUID in varchar,maps 1:1 to surgical accession
+source,varchar,Source of specimen
+site,varchar,"another location description, may or may not overlap with source"
+clin_hx_tx,varchar,"Three partially overlapping fields from various times, covering the clinician's impression of the case and the aspects of the history they consider salient."
+clin_hx_imp,varchar,"Three partially overlapping fields from various times, covering the clinician's impression of the case and the aspects of the history they consider salient."
+clin_imp,varchar,"Three partially overlapping fields from various times, covering the clinician's impression of the case and the aspects of the history they consider salient."
+rads_findings,varchar,radiology findings per the clinician.  Sparse data.
+gross,varchar,The gross description of the specimen.
+thy_size,varchar,Thyroid specific: Lesion size
+thy_echo,varchar,Thyroid specific: Echogenicity
+thy_cyst,varchar,Thyroid specific: Cyst or no?
+thy_calc,varchar,Thyroid specific: Calcified?
+thy_vasc,varchar,Thyroid specific: Vascularity?
+ia_byline,varchar,"If an immediate assessment was performed, contains physician name and immediate surrounding text."

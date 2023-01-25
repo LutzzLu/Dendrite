@@ -1,0 +1,6 @@
+﻿gross,type,note
+id_safe,UUID in varchar,maps 1:1 to surgical accession
+part,varchar,"the part of the case to which the row belongs (A, B, C, etc)"
+subsection,varchar,"the subsection of the gross to which the row belongs (for instance, a field in a TAH-BSO could be part of the ""ovary"", ""fallopian tube"", ""uterus"" or other sections)"
+field_name,text,"the name of the field reported (eg tumor size, weight of the specimen, etc)"
+field_val,text,"the value of the field, in text format regardless of whether it's actually numeric or not."

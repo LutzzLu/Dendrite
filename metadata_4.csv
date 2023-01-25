@@ -1,0 +1,3 @@
+﻿discussions,type,note
+id_safe,UUID in varchar,maps 1:1 to surgical accession
+ds_txt,text,deidentified discussion text
