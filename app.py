@@ -90,7 +90,7 @@ path_db=encryptor.load_decrypt(loaded_key, os.path.join(parent_directory,'text_d
 
 metadata_dict = {}
 for i in range(1, 18):
-    metadata_dict['metadata_'+str(i)] = pd.read_csv('metadata_'+str(i)+'.csv')
+    metadata_dict['/home/ec2-user/Dendrite/metadata_'+str(i)] = pd.read_csv('metadata_'+str(i)+'.csv')
 
 data_dict = path_db
 drop_down_menu_list = list(data_dict.keys())
