@@ -618,7 +618,7 @@ maindiv = html.Div([
     html.H6(id="display_selected_values_2", 
                 ),
     html.Hr(),
-    html.Div('Only one logic inside a pair of parentheses, use a pair of parentheses if only use one filter'),
+    html.Div('Filter Logic: Only one logic inside a pair of parentheses, use a pair of parentheses if only use one filter'),
     dbc.Input(
                     id="logic_input",
                     placeholder="Filter logic", 
@@ -684,7 +684,9 @@ maindiv = html.Div([
                             style_cell={
                                         'overflow': 'hidden',
                                         'textOverflow': 'ellipsis',
-                                        'maxWidth': 0,
+                                        'height': 'auto',
+                                        'maxWidth': '500px', 
+                                        'minWidth': '100px', 
                                         },
                          tooltip_data=[],
                             # style_cell={
