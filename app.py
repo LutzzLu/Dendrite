@@ -682,12 +682,18 @@ maindiv = html.Div([
                                                 'fontWeight': 'bold'
                                             },
                             style_cell={
-                                'height': 'auto',
-                                'minWidth': '100px', 
-                                'maxWidth': '1500px',
+                                        'overflow': 'hidden',
+                                        'textOverflow': 'ellipsis',
+                                        'maxWidth': 0,
+                                        },
+                         tooltip_data=[],
+                            # style_cell={
+                            #     'height': 'auto',
+                            #     'minWidth': '100px', 
+                            #     'maxWidth': '1500px',
                                 
-                                'whiteSpace': 'normal'
-                            },
+                            #     'whiteSpace': 'normal'
+                            # },
                                  page_current=0,
                                 page_size=PAGE_SIZE,
                                 page_action='custom',
@@ -905,7 +911,8 @@ def display_logic_input(display_selected_values_2, filter_badge, logic_choice):
 @app.callback(
     [Output("table", "data"),
     Output("table", "columns"),
-    Output("popover_button", "children"),],
+    Output("popover_button", "children"),
+    Output("table", "tooltip_data"),],
     Input("final-query", "n_clicks"),
     Input('table', "page_current"),
     Input('table', 'sort_by'),
@@ -1123,7 +1130,10 @@ def display_table(n_clicks,
         string_3 = str(len(list(set(list(dff['pt_id_safe'])))))
         
         popover_string = '~  ' +string_1+' rows, '+string_2+' unique ids, '+string_3+' unique patient ids  ~'
-        return dff.iloc[page * size: (page + 1) * size].to_dict('records'), final_data_columns, popover_string
+
+        tooltip_data=[{column: {'value': str(value), 'type': 'markdown'} for column, value in row.items()} for row in dff[page * size: (page + 1) * size].to_dict('records')]
+        return dff.iloc[page * size: (page + 1) * size].to_dict('records'), final_data_columns, popover_string, tooltip_data
+
 
 app.layout = html.Div([sidebar, maindiv])
     
